@@ -1,0 +1,161 @@
+.App {
+  text-align: center;
+}
+.map {
+  width: 100%;
+  height: 1000px;
+}
+.leaflet-control-container {
+  display: none;
+}
+.background {
+  height: 1000px;
+  background-size: cover;
+  background-image: url(assets/308.jpg);
+  -moz-background-size: 100%; /* Firefox 3.6+ */
+  -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+  -o-background-size: 100%; /* Opera 9.6+ */
+  background-size: 100%; /* Современные браузеры */
+}
+.loginContainer {
+  background-color: rgba(102, 158, 58, 0.9);
+  height: 100%;
+  max-width: 600px;
+width: 100%;
+}
+.kc-logo__title {
+  display: inline-block;
+font-family: 'Akrobat', sans-serif;
+text-transform: uppercase;
+font-size: 28px;
+font-weight: bold;
+color: #fff;
+text-align: center;
+}
+.kc-logo__text {
+  display: inline-block;
+  font-family: 'Akrobat', sans-serif;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 300px;
+  margin-bottom: 15px;
+}
+.loginVariant {
+  width: 100%;
+  height: 300px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding-top: 35px;
+}
+.loginVariant:hover {
+  width: 100%;
+  height: 300px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+.loginVariant span {
+  font-size: 13px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.loginVariant span b{
+  font-size: 18px;
+line-height: 22px;
+font-weight: bold;
+display: block;
+width: 100%;
+clear: both;
+margin-bottom: 8px;
+color: #fff;
+}
+.gerbImage {
+  height: 200px;
+  background-image: url(assets/gerb.png);
+  background-size: 25%;
+  background-repeat: no-repeat;
+  margin-left: 43%;
+  margin-bottom: -100px;
+}
+.userImage {
+  height: 200px;  
+  background-image: url(assets/rsaag.png);
+  background-size: 35%;
+  background-repeat: no-repeat;
+  margin-left: 40%;
+  margin-bottom: -100px;
+}
+.footer {
+  color: white;
+  padding-top:400px
+}
+.footer a {
+  text-decoration: none;
+}
+.kc-form-footer__email {
+  color: white;
+}
+.kc-form-footer__link {
+  margin-top: 10px;
+  color: gainsboro;
+}
+.linkInvis:hover {
+  text-decoration: none;
+}
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.top-row {
+  padding-bottom: 40px;
+  padding-top: 70px;
+}
+.mapButton {
+  height: 50px;
+  width: 50px;
+  background-color: rgba(102, 158, 58, 0.9);
+  z-index: 100000;
+  position: relative;
+  border-radius: 10%;
+  margin-top:10px;
+  margin-bottom: 15px;
+}
+.layersList {
+  z-index: 100000;
+  position: relative;
+  width: 400px;
+  height: 800px;
+  margin-right: 0;
+  margin-left: auto;
+  background-color: rgba(102, 158, 58, 0.9);
+}
+.operations {
+  float: left
+}
+.fas {
+  font-family: FontAwesome;
+  font-size: 36px
+}
