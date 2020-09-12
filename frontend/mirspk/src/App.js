@@ -9,16 +9,16 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Route exact path="/">
-        <Redirect to="/login" />
-      </Route>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
         <Route path="/login">
           <Login/>
         </Route> 
         <Route path="/home">
           <Home></Home>
         </Route> 
-        <Route path="/map/:latlng?">
+        <Route path="/map/:latlng">
          <LeafletMap></LeafletMap>
         </Route> 
       </BrowserRouter>
