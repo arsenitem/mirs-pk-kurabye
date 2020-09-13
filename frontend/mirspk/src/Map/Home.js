@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import {Redirect, Link} from 'react-router-dom';
 import gerb from '../assets/gerb.png'
 function Home() {
+    let [issuesCount, setIssuesCount] = useState(8);
     return (
        <div className="background">
            <Container className="loginContainer">
@@ -17,6 +18,9 @@ function Home() {
                 </Row>
                 <Row className="justify-content-md-center">
                 <Link to="/issues" className="linkInvis">
+                    <div className="counter">
+                        {issuesCount}
+                    </div>
                     <Button variant="outline-secondary" size="lg">Просмотр нарушений</Button>
                 </Link>
                     

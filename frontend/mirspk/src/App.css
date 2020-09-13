@@ -179,3 +179,40 @@ color: #fff;
 .custom-select {
   border: 2px solid green;
 }
+.counter {
+  background-color: red;
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+  vertical-align: middle;
+  display: table-cell;
+  border-radius: 50%;
+  transform: translate(215px,20px);
+  color: white;
+}
+.alert {
+  float:right;
+  margin-right: 400px;
+  transition: 2s;
+  z-index: 1000;
+}
+.loginContainerWide {
+  background-color: rgba(102, 158, 58, 0.9);
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.frame {
+  width:75%;
+  height: 450px;
+  margin-left: auto;
+}
+.buttonRow {
+  justify-content: end;
+  margin-top: 50px;
+  padding-right: 6%;
+}
+.buttonRow .btn{
+  margin-left: 50px;
+  margin-right: 50px;
+}

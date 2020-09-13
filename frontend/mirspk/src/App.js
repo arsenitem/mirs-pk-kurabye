@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Container, Row, Button } from 'react-bootstrap';
 import {Route, BrowserRouter, Redirect} from 'react-router-dom';
 import Login from './Login/Login'
 import Home from './Map/Home';
 import LeafletMap from './Map/Map'
+import data from './assets/polygons.json'
+import IssuesList from './Issues/IssuesList';
+let json = require('./assets/polygons.json');
 function App() {
   return (
     <div className="App">
@@ -18,8 +21,11 @@ function App() {
         <Route path="/home">
           <Home></Home>
         </Route> 
+        <Route path="/issues">
+          <IssuesList></IssuesList>
+        </Route>
         <Route path="/map/:latlng">
-         <LeafletMap></LeafletMap>
+         <LeafletMap data={json}></LeafletMap>
         </Route> 
       </BrowserRouter>
      
