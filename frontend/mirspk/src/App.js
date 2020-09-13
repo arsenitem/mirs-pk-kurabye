@@ -7,6 +7,7 @@ import Home from './Map/Home';
 import LeafletMap from './Map/Map'
 import data from './assets/polygons.json'
 import IssuesList from './Issues/IssuesList';
+import DividedMap from './Map/DividedMap';
 let json = require('./assets/polygons.json');
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/map/:latlng">
          <LeafletMap data={json}></LeafletMap>
+        </Route> 
+        <Route path="/sbsmap">
+         <DividedMap></DividedMap>
         </Route> 
       </BrowserRouter>
      
