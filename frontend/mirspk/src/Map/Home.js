@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import {Redirect, Link} from 'react-router-dom';
 import gerb from '../assets/gerb.png'
 function Home() {
+    let [issuesCount, setIssuesCount] = useState(8);
     return (
        <div className="background">
            <Container className="loginContainer">
@@ -10,13 +11,16 @@ function Home() {
             <h1 className="kc-logo__title">“Умная земля” Пермский край</h1>
             <div id="kc-content">
                 <Row className="justify-content-md-center top-row">
-                    <Link to ="/map?lat=58.0015016&lng=56.3380666" className="linkInvis" >
+                    <Link to ="/map/58.001501656.3380666" className="linkInvis" >
                         <Button variant="outline-secondary" size="lg">Перейти к карте</Button>
                     </Link>
                     
                 </Row>
                 <Row className="justify-content-md-center">
                 <Link to="/issues" className="linkInvis">
+                    <div className="counter">
+                        {issuesCount}
+                    </div>
                     <Button variant="outline-secondary" size="lg">Просмотр нарушений</Button>
                 </Link>
                     

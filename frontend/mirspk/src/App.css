@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  
 }
 .map {
   width: 100%;
@@ -21,7 +21,8 @@
   background-color: rgba(102, 158, 58, 0.9);
   height: 100%;
   max-width: 600px;
-width: 100%;
+  width: 100%;
+  text-align: center;
 }
 .kc-logo__title {
   display: inline-block;
@@ -153,9 +154,82 @@ color: #fff;
   background-color: rgba(102, 158, 58, 0.9);
 }
 .operations {
-  float: left
+  float: left;
+  margin-left: 10px;
+  margin-top: 80px;
 }
 .fas {
   font-family: FontAwesome;
   font-size: 36px
+}
+.leaflet-control-container {
+  display: inherit;
+}
+.leaflet-sbs-range {
+  text-align: inherit !important
+}
+#example-datepicker {
+  text-align: center;
+  border: 2px solid green;
+  margin-left: 5px;
+}
+.buttonRow {
+  margin-top: 15px;
+}
+.custom-select {
+  border: 2px solid green;
+}
+.counter {
+  background-color: red;
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+  vertical-align: middle;
+  display: table-cell;
+  border-radius: 50%;
+  transform: translate(215px,20px);
+  color: white;
+}
+.alert {
+  float:right;
+  margin-right: 400px;
+  transition: 2s;
+  z-index: 1000;
+}
+.loginContainerWide {
+  background-color: rgba(102, 158, 58, 0.9);
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.frame {
+  width:100%;
+  height: 450px;
+  margin-left: auto;
+}
+.buttonRow {
+  justify-content: end;
+  margin-top: 50px;
+  padding-right: 4%;
+}
+.buttonRow .btn{
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.layerInfo {
+  font-size: 20px;
+  text-align: start;
+  padding-left: 20px;
+  color: white;
+}
+.page-link {
+  background-color: #343a40;
+  border-color: #343a40;
+  color:#28a745
+}
+.pagination {
+  padding-top: 15px;
+}
+.page-item.active .page-link{
+  background-color:#56595b
 }
