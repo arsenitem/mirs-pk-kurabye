@@ -5,13 +5,13 @@ import MapButton from './MapButton';
 import LayersList from './LayersList'
 import ModalGif from './ModalGif'
 import AlertDismissible from '../Common/Alert'
-import { Modal, FormLabel, Form, Row, Col, Button } from 'react-bootstrap';
+import { Modal, FormLabel, Form, Row, Col, Button, Spinner } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
- 
+import timelapse from '../assets/timelapse.gif';
 import "react-datepicker/dist/react-datepicker.css";    
-// import DatePicker from "react-bootstrap-date-picker";
-var sideBySide = require('leaflet-side-by-side')
-var Proj = require('proj4leaflet')
+var sideBySide = require('leaflet-side-by-side');
+var Proj = require('proj4leaflet');
+
 function LeafletMap(props) {
    
     let [lat, setLat] = useState(58);
@@ -20,21 +20,13 @@ function LeafletMap(props) {
     let map = null;
     let sbsActive = false;
     let sbs = null;
-    let crs = new window.L.Proj.CRS('EPSG:3857',
-    '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs',
-    {
-        resolutions: [
-        8192, 4096, 2048, 1024, 512, 256, 128
-        ],
-        origin: [0, 0]
-    })
+   
     function mapReady(e) {     
         map = e.target;
         window.leafletMap = map;
-        // props.data.features.forEach(element => {
-        //      var polygon = window.L.polygon(window.L.Projection.SphericalMercator.unproject(element.geometry.coordinates), {color: 'red'}).addTo(map);
-            
-        // });
+        props.data.features.slice(1000).forEach(item => {
+            window.L.polygon(item.geometry.coordinates, {color: 'white'}).addTo(map);
+        })
     }
     function openModal(show) {
         setShow(show);
@@ -42,6 +34,7 @@ function LeafletMap(props) {
     function sideBySide() {
         if (sbsActive) {
             sbs.remove()
+            sbsActive = false;
         } else {
             let layer1 = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -59,11 +52,8 @@ function LeafletMap(props) {
     }
     useEffect(() => {
         let latlng = props.match.params.latlng.split(',');
-        setLat(latlng[0])
-        setLng(latlng[0])
-        setTimeout(() => {
-            setShowAlert(true)
-        }, 10000);
+        setLat(latlng[0]);
+        setLng(latlng[0]);     
     });
     let [zoom, setZoom] = useState(13);
 
@@ -73,13 +63,36 @@ function LeafletMap(props) {
    
     function generateGif() {
         //call api, return gif
+
+        //remove after presentetion
+        setLoadingState(true)
+        new Promise(resolve => {
+            setTimeout(() => {
+                setLoadingState(false)
+                resolve();
+            }, 3000)        
+        }).then(()=> {
+            let link = document.createElement("a");
+            link.href = window.URL.createObjectURL(new Blob([timelapse], {type: "image/gif"}));
+            link.download = "Таймлапс.gif";
+            link.click();
+        })
+        
+        setTimeout(() => {
+            setShowAlert(true)
+        }, 10000)
     }
     const [showAlert, setShowAlert] = useState(false);
+    let [loadingState, setLoadingState] = useState(false);
     return (     
-       <Map center={[58.0015016,58.0015016]} zoom={zoom} className="map" whenReady={mapReady} >
+       <Map center={[57.707632318611196, 57.749462127685554]} zoom={zoom} className="map" whenReady={mapReady} >
            <div className="operations">
             <MapButton icon={<i class="fas fa-exchange"></i>} action={sideBySide}></MapButton>
             <MapButton icon={<i class="fas fa-history"></i>} action={() => {openModal(true)}}></MapButton>
+            <MapButton icon={<i class="fas fa-search"></i>} action={() => {}}></MapButton>
+            <MapButton icon={<i class="fas fa-location-arrow"></i>} action={() => {}}></MapButton>
+            <MapButton icon={<i class="fas fa-expand"></i>} action={() => {}}></MapButton>
+            <MapButton icon={<i class="fas fa-download"></i>} action={() => {}}></MapButton>
             {/* <MapButton></MapButton>
             <MapButton></MapButton> */}
            </div>
@@ -97,6 +110,9 @@ function LeafletMap(props) {
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <Row>
+                        <iframe className="frameSelectArea" src="http://localhost:3000/emptymap" scrolling="no"/>
+                    </Row>
                     <Row>
                         <Col>
                         <FormLabel>Начало периода</FormLabel>
@@ -122,7 +138,14 @@ function LeafletMap(props) {
                     </Row>
                     <Row className="buttonRow">
                         <Col>
-                        <Button variant="outline-success" size="lg" onClick={generateGif}>Сгенерировать</Button>
+        <Button variant="outline-success" size="lg" onClick={generateGif}>{loadingState? <><Spinner
+      as="span"
+      animation="grow"
+      size="sm"
+      role="status"
+      aria-hidden="true"
+    />
+    Загрузка...</>: "Сгенерировать"}</Button>
                         </Col>
                     </Row>
                 </Modal.Body>

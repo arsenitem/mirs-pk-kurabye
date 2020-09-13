@@ -5,7 +5,7 @@ function AlertDismissible(props) {
     
     return (
       <>    
-        <Alert show={props.show} variant="danger" className="alert">
+        <Alert show={props.show} variant="danger" className="alert" dismissible onClose={() => props.setShow(false)}>
           <Alert.Heading>Внимание</Alert.Heading>
           <p>
            Найдены новые нарушения на земельных участках в вашей области, возможно заростание древесными породами
@@ -15,7 +15,7 @@ function AlertDismissible(props) {
           <Link to="/issues" className="linkInvis">
           <Button onClick={() => props.setShow(false)} variant="outline-danger">
                 Подробнее
-            </Button>
+          </Button>
             </Link> 
                   
           </div>
