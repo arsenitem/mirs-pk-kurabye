@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import './App.css';
 import { Container, Row, Button } from 'react-bootstrap';
 import {Route, BrowserRouter, Redirect} from 'react-router-dom';
 import Login from './Login/Login'
 import Home from './Map/Home';
 import LeafletMap from './Map/Map'
-import data from './assets/polygons.json'
 import IssuesList from './Issues/IssuesList';
 import DividedMap from './Map/DividedMap';
-let json = require('./assets/polygons.json');
+import EmptyMap from './Map/EmptyMap'
+let json = require('./assets/layers.json');
+
 function App() {
+  let [issuesCount, setIssuesCount] = useState(8);
   return (
     <div className="App">
       <BrowserRouter>
@@ -20,16 +22,19 @@ function App() {
           <Login/>
         </Route> 
         <Route path="/home">
-          <Home></Home>
+          <Home issuesCount={issuesCount} setIssuesCount={setIssuesCount}></Home>
         </Route> 
         <Route path="/issues">
-          <IssuesList></IssuesList>
+          <IssuesList issuesCount={issuesCount} setIssuesCount={setIssuesCount}></IssuesList>
         </Route>
         <Route path="/map/:latlng">
          <LeafletMap data={json}></LeafletMap>
         </Route> 
         <Route path="/sbsmap">
          <DividedMap></DividedMap>
+        </Route> 
+        <Route path="/emptymap">
+         <EmptyMap></EmptyMap>
         </Route> 
       </BrowserRouter>
      
