@@ -7,6 +7,7 @@ import shapefile as shp
 from sklearn.utils.class_weight import compute_class_weight
 from keras.preprocessing.image import load_img, img_to_array
 import os
+from PIL import Image
 
 
 def main():
@@ -19,7 +20,6 @@ def main():
 
 
 def import_data():
-    from PIL import Image
     # shp_path = "./Слои/Поля_Полигональные2.shp"
     # sf = shp.Reader(shp_path)
     # print(len(sf.shapes()))
@@ -129,6 +129,11 @@ def predict(model, image):
     plt.imshow(zoomed, alpha=0.3, vmax=1.0, vmin=0, cmap="jet")
     # plt.colorbar(pad=0.05, alpha=0)
     plt.savefig('c.png', bbox_inches='tight', pad_inches=0)     # Сохраняет файл в директорию с текущим скриптом
+
+
+    def png_to_tiff(image):
+        img = Image.open(image)
+        img.save('1.tif')
 
 
 if __name__ == "__main__":
