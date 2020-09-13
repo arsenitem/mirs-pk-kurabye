@@ -1,20 +1,23 @@
 import warnings
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import shapefile as shp
 from sklearn.utils.class_weight import compute_class_weight
+from keras.preprocessing.image import load_img, img_to_array
 import os
 
 
 def main():
     X, y = import_data()
     model = make_model(X, y)
-    #predict(model)
+    predict(model)
+
 
 
 def import_data():
-    from keras.preprocessing.image import load_img, img_to_array
+    from PIL import Image
     # shp_path = "./Слои/Поля_Полигональные2.shp"
     # sf = shp.Reader(shp_path)
     # print(len(sf.shapes()))
@@ -31,11 +34,15 @@ def import_data():
             label = 0
 
         img_path = os.path.join("cut_images_clean/", file)
-        img = load_img(img_path)
-        img = img_to_array(img) / 255
-        if img.size == 7686:
-            x.append(img)
-            y.append(label)
+        im = Image.open(img_path)
+        print(im.size)
+        new_size = (40, 40)
+        new_im = im.resize(new_size)
+        print(new_im.size)
+
+        img = img_to_array(new_im) / 255
+        x.append(img)
+        y.append(label)
 
     X = np.array(x)
     y = np.array(y)
@@ -57,7 +64,7 @@ def make_model(X, y):
     cw = compute_class_weight("balanced", np.unique(y_train), y_train)
 
     model = Sequential([
-        layers.Conv2D(16, (3, 3), name="conv1", input_shape=(42, 61, 3), activation="relu",
+        layers.Conv2D(16, (3, 3), name="conv1", input_shape=(40, 40, 3), activation="relu",
                       padding="same"),
         layers.MaxPool2D((2, 2), name="pool1"),
         layers.Dropout(0.2),
@@ -79,15 +86,21 @@ def make_model(X, y):
     return model
 
 
-def predict(model, image):
+def predict(model):
     import slidingwindow as sw
+    img_path = "test.png"
+    img = load_img(img_path)
+    img = img_to_array(img) / 255
+    plt.imshow(img)
+    plt.show()
+
     subimages = []
-    shape = (42, 61)
-    windows = sw.generate(image, sw.DimOrder.HeightWidthChannel, shape, 0.6)
+    shape = 40
+    windows = sw.generate(img, sw.DimOrder.HeightWidthChannel, shape, 0.6)
     for i, window in enumerate(windows):
-        _img = image[window.indices()]
+        _img = img[window.indices()]
         subimages.append(_img)
-    patches = np.array(subimages)
+    subimages = np.array(subimages)
 
     n_total = len(windows)
     _x = 0
@@ -100,25 +113,29 @@ def predict(model, image):
 
     print(n_total, n_x, n_total // n_x)
 
+    # predictions = []
+    # for image in subimages:
+    #     prediction = model.predict(image)
+    #     predictions.append(prediction)
+
     predictions = model.predict(subimages)
     print(predictions.shape)
-    print(predictions)
 
     field = np.reshape(predictions, (n_total // n_x, n_x))
     field = np.rot90(field)
     field = np.flip(field, axis=0)
     plt.imshow(field, cmap="jet")
 
-    h_factor = image.shape[0] // field.shape[0]
-    w_factor = image.shape[1] // field.shape[1]
+    h_factor = img.shape[0] // field.shape[0]
+    w_factor = img.shape[1] // field.shape[1]
 
     from scipy.ndimage import zoom
     zoomed = zoom(field, (h_factor, w_factor))
 
-    plt.imshow(image)
+    plt.imshow(img)
     plt.imshow(zoomed, alpha=0.3, vmax=1.0, vmin=0, cmap="jet")
 
-    plt.colorbar(fraction=0.027, pad=0.04, alpha=0)
+    plt.colorbar(pad=0.05, alpha=0)
     plt.show()
 
 
