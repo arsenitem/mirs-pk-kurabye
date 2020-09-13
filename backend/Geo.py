@@ -12,7 +12,9 @@ import os
 def main():
     X, y = import_data()
     model = make_model(X, y)
-    predict(model)
+    img_path = "test.png"
+    img = load_img(img_path)
+    predict(model, img)
 
 
 
@@ -82,11 +84,9 @@ def make_model(X, y):
     return model
 
 
-def predict(model):
+def predict(model, image):
     import slidingwindow as sw
-    img_path = "test.png"
-    img = load_img(img_path)
-    img = img_to_array(img) / 255
+    img = img_to_array(image) / 255
     plt.imshow(img)
 
     subimages = []
@@ -120,15 +120,15 @@ def predict(model):
     field = np.rot90(field)
     field = np.flip(field, axis=0)
 
-    h_factor = img.shape[0] // field.shape[0]
-    w_factor = img.shape[1] // field.shape[1]
+    height = img.shape[0] // field.shape[0]
+    width = img.shape[1] // field.shape[1]
 
     from scipy.ndimage import zoom
-    zoomed = zoom(field, (h_factor, w_factor))
+    zoomed = zoom(field, (height, width))
     plt.axis('off')
     plt.imshow(zoomed, alpha=0.3, vmax=1.0, vmin=0, cmap="jet")
     # plt.colorbar(pad=0.05, alpha=0)
-    plt.savefig('c.png', bbox_inches='tight', pad_inches=0)
+    plt.savefig('c.png', bbox_inches='tight', pad_inches=0)     # Сохраняет файл в директорию с текущим скриптом
 
 
 if __name__ == "__main__":
