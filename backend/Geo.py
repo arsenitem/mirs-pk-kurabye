@@ -35,10 +35,8 @@ def import_data():
 
         img_path = os.path.join("cut_images_clean/", file)
         im = Image.open(img_path)
-        print(im.size)
         new_size = (40, 40)
         new_im = im.resize(new_size)
-        print(new_im.size)
 
         img = img_to_array(new_im) / 255
         x.append(img)
@@ -47,8 +45,6 @@ def import_data():
     X = np.array(x)
     y = np.array(y)
     return X, y
-
-    
 
 
 def make_model(X, y):
@@ -92,7 +88,6 @@ def predict(model):
     img = load_img(img_path)
     img = img_to_array(img) / 255
     plt.imshow(img)
-    plt.show()
 
     subimages = []
     shape = 40
@@ -124,19 +119,16 @@ def predict(model):
     field = np.reshape(predictions, (n_total // n_x, n_x))
     field = np.rot90(field)
     field = np.flip(field, axis=0)
-    plt.imshow(field, cmap="jet")
 
     h_factor = img.shape[0] // field.shape[0]
     w_factor = img.shape[1] // field.shape[1]
 
     from scipy.ndimage import zoom
     zoomed = zoom(field, (h_factor, w_factor))
-
-    plt.imshow(img)
+    plt.axis('off')
     plt.imshow(zoomed, alpha=0.3, vmax=1.0, vmin=0, cmap="jet")
-
-    plt.colorbar(pad=0.05, alpha=0)
-    plt.show()
+    # plt.colorbar(pad=0.05, alpha=0)
+    plt.savefig('c.png', bbox_inches='tight', pad_inches=0)
 
 
 if __name__ == "__main__":
